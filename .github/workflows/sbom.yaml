@@ -1,0 +1,28 @@
+name: Generate SBOM
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+permissions:
+  contents: write
+
+jobs:
+  sbom:
+    name: Generate SBOM
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Generate SBOM for code repository and submit to Dependency Graph
+      uses: aquasecurity/trivy-action@0.29.0
+      with:
+        format: 'github'
+        github-pat: ${{ secrets.GITHUB_TOKEN }}
+        output: 'repo.sbom.json'
+        scan-ref: '.'
+        scan-type: 'repo'
+        trivy-config: trivy.yaml
+        version: 'v0.59.0'

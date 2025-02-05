@@ -1,0 +1,14 @@
+config: trivy.yaml
+db:
+  skip-update: true
+exit-code: 1
+format: github
+severity: []
+misconfiguration:
+  scanners: []
+pkg:
+  include-dev-deps: true
+quiet: false
+scan:
+  scanners: []
+timeout: 5m
